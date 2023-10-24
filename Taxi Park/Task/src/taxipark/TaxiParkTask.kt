@@ -35,7 +35,10 @@ fun TaxiPark.findSmartPassengers(): Set<Passenger> =
  * Return any period if many are the most frequent, return `null` if there're no trips.
  */
 fun TaxiPark.findTheMostFrequentTripDurationPeriod(): IntRange? {
-    return TODO()
+    if (this.trips.isEmpty()) return null
+
+    val durations = this.trips.map { it.duration / 10 * 10..it.duration / 10 * 10 + 9 }
+    return durations.groupingBy { it }.eachCount().maxBy { it.value }.key
 }
 
 /*
