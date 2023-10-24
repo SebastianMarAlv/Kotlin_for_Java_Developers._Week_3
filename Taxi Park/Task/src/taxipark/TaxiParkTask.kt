@@ -23,7 +23,12 @@ fun TaxiPark.findFrequentPassengers(driver: Driver): Set<Passenger> =
  * Task #4. Find the passengers who had a discount for majority of their trips.
  */
 fun TaxiPark.findSmartPassengers(): Set<Passenger> =
-    TODO()
+    this.allPassengers.filter { pass ->
+        val passTrips = this.trips.filter { pass in it.passengers }
+        val discCount = passTrips.count { (it.discount ?: 0.0) > 0.0 }
+        val noDiscCount = passTrips.size - discCount
+        discCount > noDiscCount
+    }.toSet()
 
 /*
  * Task #5. Find the most frequent trip duration among minute periods 0..9, 10..19, 20..29, and so on.
